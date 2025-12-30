@@ -3,11 +3,10 @@ use glam::Vec2;
 use crate::{
 	config::PhysicsParams,
 	game_object::{GameObject, GameObjectType, HitboxShape, OBB2D},
-	spatial_grid::SpatialGrid,
+	simulation::spatial_grid::SpatialGrid,
 	state::{GameMode, State},
 };
 
-/// Check if a circle intersects with an axis-aligned rectangle.
 pub fn circle_rect_intersects(
 	circle_center: Vec2, radius: f32, rect_center: Vec2, rect_w: f32, rect_h: f32,
 ) -> bool {

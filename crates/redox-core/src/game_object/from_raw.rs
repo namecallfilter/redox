@@ -5,7 +5,7 @@ use super::{
 	obb::OBB2D,
 	types::{GameObject, HitboxShape},
 };
-use crate::parser::RawObject;
+use crate::formats::level::RawObject;
 
 impl GameObject {
 	pub fn from_raw(raw: &RawObject) -> Self {

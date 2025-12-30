@@ -1,7 +1,7 @@
 use super::Pathfinder;
 use crate::{
 	game_object::{GameObjectType, OBB2D},
-	physics,
+	simulation::physics,
 	state::{Action, GameMode, State},
 };
 

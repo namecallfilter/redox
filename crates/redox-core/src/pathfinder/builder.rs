@@ -1,5 +1,5 @@
 use super::Pathfinder;
-use crate::{config::Config, game_object::GameObject, spatial_grid::SpatialGrid};
+use crate::{config::Config, game_object::GameObject, simulation::spatial_grid::SpatialGrid};
 
 impl Pathfinder {
 	pub fn new(mut objects: Vec<GameObject>, _goal_x: f32) -> Self {

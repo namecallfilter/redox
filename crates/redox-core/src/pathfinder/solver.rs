@@ -1,10 +1,12 @@
 use glam::Vec2;
 use tracing::info;
 
-use super::Pathfinder;
-use crate::{
-	collision,
+use super::{
+	Pathfinder,
 	search::{self, NodeIndexWrapper, SearchSession},
+};
+use crate::{
+	simulation::collision,
 	state::{Action, GameMode, Node, State, StateKey},
 };
 

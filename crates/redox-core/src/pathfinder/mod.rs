@@ -1,8 +1,9 @@
 pub mod builder;
+pub mod search;
 pub mod sim;
 pub mod solver;
 
-use crate::{config::Config, game_object::GameObject, spatial_grid::SpatialGrid};
+use crate::{config::Config, game_object::GameObject, simulation::spatial_grid::SpatialGrid};
 
 pub struct Pathfinder {
 	pub(crate) objects: Vec<GameObject>,
