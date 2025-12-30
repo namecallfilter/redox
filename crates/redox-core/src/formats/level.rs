@@ -17,10 +17,16 @@ pub enum ParserError {
 }
 
 pub fn parse_level_data(encoded_data: &str) -> Result<String, ParserError> {
-	let clean_data = if let Some(idx) = encoded_data.find("H4sI") {
-		&encoded_data[idx..]
+	let cleaned: String = encoded_data.chars().filter(|c| !c.is_whitespace()).collect();
+
+	if cleaned.is_empty() {
+		return Err(ParserError::MissingData);
+	}
+
+	let clean_data = if let Some(idx) = cleaned.find("H4sI") {
+		&cleaned[idx..]
 	} else {
-		encoded_data.trim()
+		&cleaned[..]
 	};
 
 	let decoded_bytes = URL_SAFE.decode(clean_data)?;

@@ -51,8 +51,43 @@ pub async fn run_visualizer(level_path: std::path::PathBuf) {
 		}
 	}
 
-	let content = fs::read_to_string(level_path).expect("Failed to read level file");
-	let decompressed = level::parse_level_data(&content).expect("Failed to parse level data");
+	let content = match fs::read_to_string(&level_path) {
+		Ok(c) => c,
+		Err(e) => loop {
+			clear_background(BLACK);
+			draw_text(
+				&format!("Error: Failed to read {:?}: {}", level_path, e),
+				20.0,
+				40.0,
+				30.0,
+				RED,
+			);
+			draw_text("Press ESC to quit", 20.0, 80.0, 20.0, WHITE);
+			if is_key_pressed(KeyCode::Escape) {
+				return;
+			}
+			next_frame().await;
+		},
+	};
+
+	let decompressed = match level::parse_level_data(&content) {
+		Ok(s) => s,
+		Err(e) => loop {
+			clear_background(BLACK);
+			draw_text(
+				&format!("Error: Failed to parse level data: {}", e),
+				20.0,
+				40.0,
+				30.0,
+				RED,
+			);
+			draw_text("Press ESC to quit", 20.0, 80.0, 20.0, WHITE);
+			if is_key_pressed(KeyCode::Escape) {
+				return;
+			}
+			next_frame().await;
+		},
+	};
 	let raw_objects = level::parse_objects(&decompressed);
 	let game_objects: Vec<GameObject> = raw_objects.iter().map(GameObject::from_raw).collect();
 
