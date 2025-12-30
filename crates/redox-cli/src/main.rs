@@ -126,7 +126,7 @@ fn main() -> Result<()> {
 		.count();
 	info!("Total Presses: {}", presses);
 
-	match gdr::save_gdr(&path, &args.output, 240) {
+	match gdr::save_gdr(&path, args.output.to_str().unwrap(), 240.0) {
 		Ok(()) => info!("Saved replay to {}", args.output.display()),
 		Err(e) => error!("Failed to save replay: {:?}", e),
 	}
