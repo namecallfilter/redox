@@ -14,7 +14,7 @@ use std::{
 
 use app::VisualizerApp;
 use macroquad::prelude::*;
-use redox_core::{game_object::GameObject, parser, pathfinder::Pathfinder};
+use redox_core::{formats::level, game_object::GameObject, pathfinder::Pathfinder};
 pub use types::SearchMessage;
 
 type Vec2 = ::glam::Vec2;
@@ -52,8 +52,8 @@ pub async fn run_visualizer(level_path: std::path::PathBuf) {
 	}
 
 	let content = fs::read_to_string(level_path).expect("Failed to read level file");
-	let decompressed = parser::parse_level_data(&content).expect("Failed to parse level data");
-	let raw_objects = parser::parse_objects(&decompressed);
+	let decompressed = level::parse_level_data(&content).expect("Failed to parse level data");
+	let raw_objects = level::parse_objects(&decompressed);
 	let game_objects: Vec<GameObject> = raw_objects.iter().map(GameObject::from_raw).collect();
 
 	let mut max_x = 0.0f32;

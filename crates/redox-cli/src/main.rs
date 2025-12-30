@@ -5,7 +5,7 @@ use std::{fs, path::PathBuf};
 use anyhow::{Context, Result};
 use clap::Parser;
 use glam::Vec2;
-use redox_core::{game_object::GameObject, gdr, parser, pathfinder::Pathfinder, state};
+use redox_core::{formats::level, game_object::GameObject, gdr, pathfinder::Pathfinder, state};
 use tracing::{error, info, warn};
 use tracing_subscriber::{EnvFilter, prelude::*};
 
@@ -54,9 +54,9 @@ fn main() -> Result<()> {
 		.with_context(|| format!("Failed to read level file: {:?}", args.level))?;
 
 	info!("Parsing level data...");
-	let decompressed = parser::parse_level_data(&content)?;
+	let decompressed = level::parse_level_data(&content)?;
 
-	let raw_objects = parser::parse_objects(&decompressed);
+	let raw_objects = level::parse_objects(&decompressed);
 	let game_objects: Vec<GameObject> = raw_objects.iter().map(GameObject::from_raw).collect();
 
 	info!("Converted {} game objects", game_objects.len());
