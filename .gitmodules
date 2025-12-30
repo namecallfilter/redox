@@ -1,0 +1,9 @@
+[submodule "docs/reference/GD-2.206-Decompiled"]
+	path = docs/reference/GD-2.206-Decompiled
+	url = https://github.com/CallocGD/GD-2.206-Decompiled
+[submodule "docs/reference/GDReplayFormat"]
+	path = docs/reference/GDReplayFormat
+	url = https://github.com/maxnut/GDReplayFormat
+[submodule "docs/reference/pathfinder_1.6"]
+	path = docs/reference/pathfinder_1.6
+	url = https://github.com/camila314/pathfinder
