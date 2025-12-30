@@ -187,8 +187,7 @@ impl Pathfinder {
 
 			for action in actions_to_try.iter().take(action_count) {
 				let action = *action;
-				let mut next_state =
-					physics::simulate_step(&current_node.state, action, &self.config.physics);
+				let next_state = self.simulate_step(&current_node.state, action);
 
 				if next_state.position.y < -100.0 {
 					continue;
@@ -204,15 +203,6 @@ impl Pathfinder {
 				{
 					continue;
 				}
-
-				// Landing logic (special case for Cube mode in pathfinder)
-				if next_state.mode == GameMode::Cube {
-					// This logic is still inline in the original, we should move it to physics but it needs objects.
-					// For now let's keep it here or in a helper.
-					next_state = self.apply_landing_logic(&current_node.state, next_state);
-				}
-
-				next_state = self.check_portal_collisions(next_state);
 
 				let mut new_g = current_node.g + self.config.physics.dt;
 				if action == Action::Press {
@@ -439,7 +429,17 @@ impl Pathfinder {
 	}
 
 	pub fn simulate_step(&self, state: &State, action: Action) -> State {
-		physics::simulate_step(state, action, &self.config.physics)
+		let mut next_state = physics::simulate_step(state, action, &self.config.physics);
+
+		// Landing logic (special case for Cube mode)
+		if next_state.mode == GameMode::Cube {
+			next_state = self.apply_landing_logic(state, next_state);
+		}
+
+		// Portal collisions
+		next_state = self.check_portal_collisions(next_state);
+
+		next_state
 	}
 
 	pub fn dt(&self) -> f32 {
